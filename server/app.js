@@ -29,38 +29,40 @@ io.on('connection', function (socket) {
 		io.emit('login', {
             Users : Users,
             Count : Count,
-            Name  : obj.name
+            Name  : obj.name,
+            Uid   : obj.uid
         });
-		console.log(obj.username+'加入了聊天室');
+		console.log(obj.name+'加入了聊天室');
 	});
 
     //监听用户退出
-	socket.on('disconnect', function(){
+	socket.on('disconnect', function(opt){
+        console.log('disconnect uid is ----------', opt.Uid)
 
-		//将退出的用户从在线列表中删除
-		if(onlineUsers.hasOwnProperty(socket.name)) {
+		// 将退出的用户从在线列表中删除
+		if(Users.hasOwnProperty(socket.name)) {
 			//退出用户的信息
 			var obj = {
-                userid:socket.name,
-                username:onlineUsers[socket.name]
+                Uid:socket.Uid,
+                name:onlineUsers[socket.name]
             };
-            console.log(socket.name,'tuichu')
 			//删除
-			delete onlineUsers[socket.name];
+			delete Users[socket.name];
 			//在线人数-1
-			onlineCount--;
+			Count--; 
 
 			//向所有客户端广播用户退出
-			io.emit('logout', {onlineUsers:onlineUsers, onlineCount:onlineCount, user:obj});
-			console.log(obj.username+'退出了聊天室');
+			//io.emit('logout', {onlineUsers:onlineUsers, onlineCount:onlineCount, user:obj});
+			console.log(obj.name+'退出了聊天室');
 		}
+
 	});
 
 	//监听用户发布聊天内容
-	socket.on('message', function(obj){
+	socket.on('msg', function(obj){
 		//向所有客户端广播发布的消息
-		io.emit('message', obj);
-		console.log(obj.username+'说：'+obj.content);
+		io.emit('msg', obj);
+		console.log(obj.Name+'说：'+obj.Msg);
 	});
 
 

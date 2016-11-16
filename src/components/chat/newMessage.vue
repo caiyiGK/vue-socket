@@ -2,7 +2,7 @@
 
     <div class="newMessage chat-message">
         <div class="content">
-            <span>必奢技术-caiyi</span>
+            <span>{{msg}}</span>
         </div>
     </div>
 
@@ -10,7 +10,12 @@
 
 <script>
 export default {
-
+    props: {
+        msg : {
+            type: String,
+            default: '暂无消息'
+        },
+    }
 }
 </script>
 

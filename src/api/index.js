@@ -37,3 +37,36 @@ const VUECHAT = {
 }
 
 export default VUECHAT
+
+
+// export default {
+//     user: {},
+//     socket: '',
+//
+//     // 用户登录
+//     userLogin (obj, callback) {
+//         this.socket = io.connect('http://localhost:8089');
+//
+//         if (this.socket) {
+//             // 用户名字， 唯一用户uid
+//             this.user = {
+//                 name : obj.name,
+//                 uid : obj.name + new Date().getTime()
+//             }
+//             // 用户登录
+//             this.socket.emit('login', this.user);
+//
+//             // 监听用户登录
+//             this.socket.on('login', (opt) => {
+//                 callback(opt);
+//             })
+//         }
+//     },
+//
+//     // 用户退出
+//     userLogout (id) {
+//         //console.log(this.socket.emit)
+//         this.socket.emit('disconnect', {Uid: id})
+//     }
+//
+// }

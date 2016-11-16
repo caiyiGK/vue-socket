@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import login from 'api/userLogin'  // 用户登录 api
+import { userLogin } from 'api/user'  // 用户api
 import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
     data () {
@@ -43,7 +43,7 @@ export default {
                 slef.$refs.username.focus();
                 alert('用户名不可以为空！')
             }
-            login({
+            userLogin({
                 name: name
             },(opt) => {
                 slef.UserLogin(opt)

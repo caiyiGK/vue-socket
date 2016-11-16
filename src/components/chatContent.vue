@@ -1,20 +1,18 @@
 <template>
     <div class="chatContent" id="chatContent">
-        <sys-message></sys-message>
+        <!-- <sys-message></sys-message>
         <new-message></new-message>
-        <my-message></my-message>
+        <my-message></my-message> -->
+        <slot>
+            <new-message></new-message>
+        </slot>
     </div>
 </template>
 
 <script>
-import socket from 'api/index'
-import sysMessage from 'components/chat/sysMessage'
-import myMessage from 'components/chat/myMessage'
 import newMessage from 'components/chat/newMessage'
 export default {
     components: {
-        sysMessage,
-        myMessage,
         newMessage
     }
 }
@@ -24,6 +22,6 @@ export default {
 .chatContent {
     background: #f1f1f1;
     overflow-y: scroll;
-    height: 100%;
+    height: ~'calc(100% - 85px)';
 }
 </style>

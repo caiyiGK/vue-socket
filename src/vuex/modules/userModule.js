@@ -41,7 +41,9 @@ export default {
     },
 
     getters : {
-
+        getUser (state) {
+            return state
+        }
     }
 
 }

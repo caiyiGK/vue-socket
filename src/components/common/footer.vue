@@ -1,12 +1,20 @@
 <template>
     <div class="footer" id="footer">
-        <div class="text"><input type="text" value=""></div>
-        <div class="submit"><a href="#">发送</a></div>
+        <div class="text"><input type="text" v-model="message"></div>
+        <div class="submit"><a @click.stop="send(message)">发送</a></div>
     </div>
 </template>
 
 <script>
 export default {
+    props: {
+        send: Function
+    },
+    data() {
+        return {
+            message: ''
+        }
+    },
     components: {
 
     }
