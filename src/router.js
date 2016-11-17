@@ -4,19 +4,28 @@ const routes = [
 
     {
         path: '/',
-        name: 'APP',
-        component: (resolve) => require(['containers/App'], resolve)
+        name: 'App',
+        component: (resolve) => require(['containers/App'], resolve),
+        children: [
+            {
+                path: '/',
+                name: 'LOGIN',
+                component: (resolve) => require(['containers/userContainer'], resolve)
+            },
+            {
+                path: 'login',
+                name: 'LOGIN',
+                component: (resolve) => require(['containers/loginContainer'], resolve)
+            },
+            {
+                path: 'chat',
+                name: 'CHAT',
+                component: (resolve) => require(['containers/chatContainer'], resolve)
+            },
+        ]
     },
-    {
-        path: '/chat',
-        name: 'APP',
-        component: (resolve) => require(['containers/chatContainer'], resolve)
-    },
-    {
-        path: '/login',
-        name: 'LOGIN',
-        component: (resolve) => require(['containers/LoginContainer'], resolve)
-    },
+
+
     // {
     //     path: '/list',
     //     name: 'LIST',

@@ -2,13 +2,13 @@
     <div class="header" id="header">
 
             <div class="left">
-                <router-link to="/" v-if="false">返回</router-link>
+                <router-link to="/">返回</router-link>
             </div>
 
-            <div class="mid header-title"><span>必奢技术人员沟通群</span></div>
+            <div class="mid header-title"><span>必奢技术人员沟通群({{User.Count}})</span></div>
 
             <div class="right">
-                <a href="#" v-if="false">
+                <a href="#">
                     <i class="fa fa-bars"></i>
                 </a>
             </div>
@@ -19,7 +19,7 @@
 <script>
 export default {
     props : {
-        //User : Object
+        User : Object
     },
     components: {
 

@@ -1,41 +1,40 @@
 import io from 'socket.io-client'
 
-var user = {}, socket;
-
-// 用户登录
-export const userLogin = (obj, callback) => {
-    socket = io.connect('http://localhost:8089');
-
-    if (socket) {
-        // 用户名字， 唯一用户uid
-        user = {
-            name : obj.name,
-            uid : obj.name + new Date().getTime()
+export default {
+    Users : {},
+    uid: '',
+    
+    // 用户连接
+    connect(opt,callback) {
+        this.socket = io.connect('http://localhost:8089')
+        let obj = {
+            name : opt.name,
+            uid : opt.uid
         }
-        // 用户登录
-        socket.emit('login', user);
+        this.socket.emit('login', obj)
 
-        // 监听用户登录
-        socket.on('login', (opt) => {
-            callback(opt);
+        this.login(callback)
+
+    },
+
+    // 用户登录
+    login(callback) {
+        this.socket.on('login', (res) => {
+            this.uid = res.uid
+            callback(res)
+        })
+    },
+
+    // 发送消息
+    sendMessage(opt,callback) {
+        this.socket.emit('msg', opt)
+    },
+
+    // 接收信息
+    receiveMessage(callback) {
+        this.socket.on('msg', (opt) => {
+            callback(opt)
         })
     }
-}
 
-// 用户退出
-export const userLogout = (id) => {
-    //socket.emit('disconnect')
-    location.reload();
-}
-
-
-export const sendMessage = (opt) => {
-    socket.emit('msg', opt)
-}
-
-export const receiveMessage = (callback) => {
-    //console.log(socket)
-    socket.on('msg', function(msg) {
-        callback(msg)
-    })
 }

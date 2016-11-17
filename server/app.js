@@ -10,7 +10,6 @@ var Count = 0;    //当前在线人数
 
 
 io.on('connection', function (socket) {
-    console.log('a user connected');
 
     //监听新用户加入
 	socket.on('login', function(obj){
@@ -21,16 +20,15 @@ io.on('connection', function (socket) {
 		//检查在线列表，如果不在里面就加入
 		if(!Users.hasOwnProperty(obj.uid)) {
 			Users[obj.uid] = obj.name;
-			//在线人数+1
-			Count++;
+			Count++; //在线人数+1
 		}
 
 		//向所有客户端广播用户加入
 		io.emit('login', {
             Users : Users,
             Count : Count,
-            Name  : obj.name,
-            Uid   : obj.uid
+            name  : obj.name,
+            uid   : obj.uid
         });
 		console.log(obj.name+'加入了聊天室');
 	});
@@ -43,16 +41,15 @@ io.on('connection', function (socket) {
 		if(Users.hasOwnProperty(socket.name)) {
 			//退出用户的信息
 			var obj = {
-                Uid:socket.Uid,
-                name:onlineUsers[socket.name]
+                uid:socket.uid,
+                name:Users[socket.name]
             };
 			//删除
 			delete Users[socket.name];
 			//在线人数-1
-			Count--; 
+			Count--;
 
 			//向所有客户端广播用户退出
-			//io.emit('logout', {onlineUsers:onlineUsers, onlineCount:onlineCount, user:obj});
 			console.log(obj.name+'退出了聊天室');
 		}
 
@@ -60,10 +57,17 @@ io.on('connection', function (socket) {
 
 	//监听用户发布聊天内容
 	socket.on('msg', function(obj){
+
 		//向所有客户端广播发布的消息
-		io.emit('msg', obj);
-		console.log(obj.Name+'说：'+obj.Msg);
+		io.emit('msg', Object.assign(obj, {
+            name: Users[obj.uid]
+        }));
+		console.log(Users[obj.uid]+'说：'+obj.msg);
 	});
 
+    // 返回用户uid
+    socket.on('id', function() {
+        io.emit('id', socket.uid)
+    })
 
 });

@@ -8,9 +8,7 @@
         </div>
 
         <div class="messageBox">
-            <div class="content">
-                方法二：强制不换行 
-            </div>
+            <div class="content">{{item.msg}}</div>
         </div>
 
 
@@ -21,7 +19,9 @@
 
 <script>
 export default {
-
+    props: {
+        item : Object
+    }
 }
 </script>
 

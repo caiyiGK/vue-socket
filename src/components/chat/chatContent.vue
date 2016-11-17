@@ -1,8 +1,5 @@
 <template>
     <div class="chatContent" id="chatContent">
-        <!-- <sys-message></sys-message>
-        <new-message></new-message>
-        <my-message></my-message> -->
         <slot>
             <new-message></new-message>
         </slot>
@@ -20,6 +17,7 @@ export default {
 
 <style lang="less" scoped>
 .chatContent {
+    -webkit-overflow-scrolling: touch;
     background: #f1f1f1;
     overflow-y: scroll;
     height: ~'calc(100% - 85px)';

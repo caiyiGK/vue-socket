@@ -8,9 +8,9 @@
         </div>
 
         <div class="messageBox">
-            <div class="userNmae">必奢技术-caiyi</div>
+            <div class="userNmae">{{item.name}}</div>
             <div class="content">
-                123kljfkld
+                {{item.msg}}
             </div>
         </div>
 
@@ -20,7 +20,9 @@
 
 <script>
 export default {
-
+    props: {
+        item: Object
+    }
 }
 </script>
 

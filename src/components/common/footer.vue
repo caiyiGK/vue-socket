@@ -1,19 +1,34 @@
 <template>
     <div class="footer" id="footer">
-        <div class="text"><input type="text" v-model="message"></div>
-        <div class="submit"><a @click.stop="send(message)">发送</a></div>
+
+        <a @click="tab($event)" :class="{'cur' : iscur == 'chat'}">
+            <i class="fa fa-user-o"></i>
+            <span>必奢</span>
+        </a>
+
+        <a href="#" :class="{'cur' : iscur == 'address'}">
+            <i class="fa fa-user-o"></i>
+            <span>通讯录</span>
+        </a>
+
+        <a href="#" :class="{'cur' : iscur == 'find'}">
+            <i class="fa fa-user-o"></i>
+            <span>发现</span>
+        </a>
+
+        <a href="#" :class="{'cur' : iscur == 'me'}">
+            <i class="fa fa-user-o"></i>
+            <span>我</span>
+        </a>
+
     </div>
 </template>
 
 <script>
 export default {
     props: {
-        send: Function
-    },
-    data() {
-        return {
-            message: ''
-        }
+        tab: Function,
+        iscur: String
     },
     components: {
 
@@ -29,39 +44,27 @@ export default {
     flex-shrink: 0;
     display: -webkit-flex;
     display: flex;
-    justify-content: flex-start;
-    padding: 6px 10px;
-    box-sizing: border-box;
+    justify-content: space-between;
+    flex-direction: row;
 }
-.text {
-    width: 80%;
-}
-.text input {
-    width: 100%;
-    border: 1px solid #f1f1f1;
-    border-radius: 8px;
-    height: 38px;
-    box-sizing: border-box;
-    font-size: 14px;
-    font-size: 0.14rem;
-    padding: 5px 10px;
-}
-.submit {
-    margin-left: 2%;
-    border-radius: 8px;
-    background: #2d73a9;
-    height: 100%;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-box-align: center;
+.footer a {
+    display: inline-flex;
+    display: -webkit-inline-flex;
+    flex-direction: column;
     align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    width: 18%;
-}
-.submit a {
-    display: block;
-    color: #FFF;
+    align-self: center;
+    box-sizing: border-box;
     text-decoration: none;
+    flex-grow: 1;
+}
+.footer a span {
+    margin-top: 5px;
+    font-size: 0.10rem;
+}
+.footer a i {
+    font-size: 0.14rem;
+}
+.footer a.cur {
+    color: green;
 }
 </style>

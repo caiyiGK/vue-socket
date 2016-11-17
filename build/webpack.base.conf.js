@@ -29,6 +29,7 @@ module.exports = {
       'components': path.resolve(__dirname, '../src/components'),
       'containers': path.resolve(__dirname, '../src/containers'),
       'mixins': path.resolve(__dirname, '../src/mixins'),
+      'directives': path.resolve(__dirname, '../src/directives'),
       'api': path.resolve(__dirname, '../src/api')
     }
   },

@@ -26,7 +26,10 @@ export default {
 
         },
         [USERS_POSTS_SUCCESS] (state, payload) {
-            Object.assign(state, {...payload})
+            Object.assign(state, {
+                Users : payload.Users,
+                Count : payload.Count,
+            })
         },
         [USERS_POSTS_FAILURE] (state) {
 

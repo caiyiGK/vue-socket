@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { userLogin } from 'api/user'  // 用户api
+import User from 'api/user'  // 用户api
 import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
     data () {
@@ -25,12 +25,6 @@ export default {
     },
     components: {
 
-    },
-    computed : {
-        ...mapState([
-        ]),
-        ...mapGetters([
-        ])
     },
 
     methods: {
@@ -43,18 +37,18 @@ export default {
                 slef.$refs.username.focus();
                 alert('用户名不可以为空！')
             }
-            userLogin({
-                name: name
-            },(opt) => {
-                slef.UserLogin(opt)
-                this.$router.push('/chat')
-                this.name = ''
+            User.connect({
+                name: name,
+                uid : new Date().getTime()
+            }, (res) => {
+                this.UserLogin(res)
+                slef.$router.push('/chat')
             })
+
         }
     },
 
     created() {
-
     }
 }
 </script>

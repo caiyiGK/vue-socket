@@ -4,12 +4,16 @@
 
         <chat-header :User="getUser"></chat-header>
 
-        <chat-content>
+        <chat-content v-scrollBottom>
+            <div class="" v-if="message.length" v-for="item in message">
 
-            <sys-message></sys-message>
-            <new-message></new-message>
-            <my-message></my-message>
+                <sys-message v-if="item.uid != uid" :item="item"></sys-message>
 
+                <!-- <new-message :msg="item.msg"></new-message> -->
+
+                <my-message v-if="item.uid == uid"  :item="item"></my-message>
+
+            </div>
         </chat-content>
 
         <chat-footer :send="send"></chat-footer>
@@ -19,32 +23,36 @@
 </template>
 
 <script>
-import 'assets/style/common.less'
-import socket from 'socket.io-client'
-import chatHeader from 'components/common/header'
-import chatFooter from 'components/common/footer'
-import chatContent from 'components/chatContent'
+import chatHeader from 'components/chat/header'         // 聊天头部组件
+import chatFooter from 'components/chat/footer'         // 聊天发送组件
+import chatContent from 'components/chat/chatContent'   // 聊天消息内容组件
 
-import sysMessage from 'components/chat/sysMessage'
-import myMessage from 'components/chat/myMessage'
-import newMessage from 'components/chat/newMessage'
+import sysMessage from 'components/chat/sysMessage'     // 朋友消息组件
+import myMessage from 'components/chat/myMessage'       // 我的消息组件
+import newMessage from 'components/chat/newMessage'     // 时间消息组件
 
+import scrollBottom from 'directives/scrollBottom'      // 滚动到地步指令
 import { mapState, mapGetters, mapActions } from 'vuex'
-import { userLogout, sendMessage, receiveMessage } from 'api/user'  // 用户api
+import User from 'api/user'  // 用户api
 
 export default {
     components: {
-        chatHeader,
-        chatFooter,
-        chatContent,
-        sysMessage,
-        myMessage,
-        newMessage
+        chatHeader,     // 聊天头部组件
+        chatFooter,     // 聊天发送组件
+        chatContent,    // 聊天消息内容组件
+        sysMessage,     // 朋友消息组件
+        myMessage,      // 我的消息组件
+        newMessage      // 时间消息组件
+    },
+
+    directives : {
+        scrollBottom : scrollBottom
     },
 
     data() {
         return {
-            message: []
+            message: [],        // 消息数组
+            uid : User.uid      // 当前用户 uid
         }
     },
 
@@ -55,26 +63,26 @@ export default {
     },
 
     methods: {
-        logout(id) {
-            userLogout(id)
-        },
+        ...mapActions([
+            'UserLogin'
+        ]),
         send(message) {
             if (!message.trim()) {
                 alert('信息不可以为空')
                 return
             }
-            sendMessage({
-                Msg: message,
-                Name: this.getUser.Name
+            User.sendMessage({
+                msg: message,
+                uid: this.uid
             })
         }
     },
 
     created() {
-        receiveMessage((items) => {
-            this.message.push(items)
-            console.log(this.message)
-        });
+        User.receiveMessage((res) => {
+            this.message.push(res)
+        })
+
     }
 }
 </script>

@@ -8,6 +8,7 @@
 
 <script>
 import 'assets/style/common.less'
+import 'assets/font/css/font-awesome.min.css'
 export default {
 }
 </script>
